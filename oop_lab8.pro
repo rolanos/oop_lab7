@@ -10,15 +10,17 @@ CONFIG += c++17
 
 SOURCES += \
     graph.cpp \
-    graph_draw.cpp \
     main.cpp \
-    interface.cpp
+    interface.cpp \
+    state_graph.cpp \
+    state_graph_draw.cpp
 
 HEADERS += \
     graph.h \
-    graph_draw.h \
     interface.h \
-    matrix.h
+    matrix.h \
+    state_graph.h \
+    state_graph_draw.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

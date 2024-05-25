@@ -2,19 +2,23 @@
 #define GRAPHDRAW_H
 
 #include <QPainter>
-#include "graph.h"
 
-class GraphDraw
+#include "state_graph.h"
+
+class StateGraphDraw
 {
 
 public:
-    GraphDraw();
-    GraphDraw(Graph);
+    StateGraphDraw();
+    StateGraphDraw(StateGraph);
 
+    //Отрисовка
     void draw(QPainter*, QRect);
+    //Новое событие
+    void newEvent(bool);
 
 private:
-    Graph graph;
+    StateGraph graph;
 
     void drawLines(QPointF*, QPainter*, int i, int j, qreal);
 };

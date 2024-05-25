@@ -20,6 +20,7 @@ public:
     //Выбор элемента матрицы
     bool getElement(int i, int j);
 
+
 private:
     Matrix<bool>* matrix;
 };

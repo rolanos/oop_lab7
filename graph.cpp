@@ -32,7 +32,7 @@ QString Graph::setGraph(QString path) {
     matrix = new Matrix<bool>(size, size);
     QByteArrayList valuesList = values.split(' ');
     if((size * size) != valuesList.length()){
-        return QString("Ошибка! В файле указано ") + QString::number(size) + QString(", а в матрице") + QString::number(valuesList.length());
+        return QString("Ошибка! В файле указано элемента ") + QString::number(size) + QString(", а в матрице ") + QString::number(valuesList.length());
     }
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {

@@ -6,7 +6,7 @@ TInterface::TInterface(QWidget *parent) : QWidget(parent)
     height = 360;
 
     setFixedSize(width, height);
-    setWindowTitle("Практическая работа №7. Команда 14");
+    setWindowTitle("Практическая работа №8. Команда 14");
     // Устанавливаем серый цвет фона
     setStyleSheet("background-color: #F0F0F0;"); // серый цвет в формате RGB
 
@@ -16,7 +16,7 @@ TInterface::TInterface(QWidget *parent) : QWidget(parent)
 
     stateLabel = new QLabel(this);
     stateLabel->setText("Никакой граф не выбран.\nНажмите для выбора на кнопку ниже");
-    stateLabel->setGeometry(width * 0.05, height * 0.05, width * 0.8, height * 0.2);
+    stateLabel->setGeometry(width * 0.05, height * 0.05, width * 0.8, height * 0.6);
     stateLabel->setStyleSheet("font-weight: 600; font-size: 20px; font-family: Times New Roman;");
 
     connect(pushButton, SIGNAL(clicked()), this, SLOT(pickFile()));
@@ -35,7 +35,7 @@ void TInterface::pickFile()
     //Проверка на правильность открытия файла
     if (fileName != "")
     {
-        Graph graph(fileName);
+        StateGraph graph(fileName);
         //Проверка на правильность считывания файла графа
         QString status = graph.setGraph(fileName);
         if(status != nullptr){
@@ -43,7 +43,7 @@ void TInterface::pickFile()
             repaint();
             return;
         }
-        this->graph = GraphDraw(graph);
+        this->graph = StateGraph(graph);
         //Скрываем строку состояния
         stateLabel->setVisible(false);
         repaint();
@@ -59,4 +59,11 @@ void TInterface::paintEvent(QPaintEvent*)
     p.begin(this);
     graph.draw(&p, QRect(0, height * 0.05, width, height * 0.75));
     p.end();
+}
+
+void TInterface::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton)  graph.newEvent(false);
+    if (event->button() == Qt::RightButton) graph.newEvent(true);
+    update();
 }

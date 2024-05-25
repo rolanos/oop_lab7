@@ -6,7 +6,10 @@
 #include <QFileDialog>
 #include <QPushButton>
 #include <QLabel>
-#include "graph_draw.h"
+#include <QMouseEvent>
+
+#include "state_graph_draw.h"
+#include "state_graph.h"
 
 class TInterface : public QWidget
 {
@@ -26,7 +29,7 @@ private:
     //Надпись со статусом приложения
     QLabel* stateLabel;
     //Класс, отвечающий за хранение реализации и отображение графа
-    GraphDraw graph;
+    StateGraphDraw graph;
 
 public slots:
     //Callback для получения файла с матрицой смежности
@@ -34,5 +37,7 @@ public slots:
 protected:
     //Переопределяем метод отрисовки виджета
     void paintEvent(QPaintEvent*) override;
+    //Метод смены вершины по нажатию
+    void mousePressEvent(QMouseEvent*);
 };
 #endif // TINTERFACE_H

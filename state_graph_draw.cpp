@@ -1,12 +1,12 @@
-#include "graph_draw.h"
+#include "state_graph_draw.h"
 
-GraphDraw::GraphDraw() {}
+StateGraphDraw::StateGraphDraw() {}
 
-GraphDraw::GraphDraw(Graph graph){
+StateGraphDraw::StateGraphDraw(StateGraph graph){
     this->graph = graph;
 }
 
-void GraphDraw::draw(QPainter* painter, QRect window)
+void StateGraphDraw::draw(QPainter* painter, QRect window)
 {
     //Установка нужных значений в плоскости программы
     int dimension = this->graph.getMatrixRowDimension();
@@ -49,13 +49,19 @@ void GraphDraw::draw(QPainter* painter, QRect window)
         }
     }
 
-    //Устанавливаем цвет заднего фона
-    painter->setBrush(QBrush(Qt::darkBlue));
+
 
     for (int i = 0; i < dimension; i++)
     {
         //Устанавливаем цвет границы
         painter->setPen(QPen(Qt::white));
+        //Устанавливаем цвет заднего фона
+        if (graph.getIndex() == i) {
+            painter->setBrush(QBrush(Qt::darkGreen));
+        }
+        else {
+            painter->setBrush(QBrush(Qt::darkBlue));
+        }
         //Рисуем вершину в виде окружности с радиусом fontSize
         painter->drawEllipse(points[i], fontSize, fontSize);
         //Рисуем текст внутри окружности(вершины)
@@ -65,7 +71,7 @@ void GraphDraw::draw(QPainter* painter, QRect window)
     delete [] points;
 }
 
-void GraphDraw::drawLines(QPointF *points, QPainter *p, int i, int j, qreal radius)
+void StateGraphDraw::drawLines(QPointF *points, QPainter *p, int i, int j, qreal radius)
 {
     int size = graph.getMatrixRowDimension();
     double angle = 2.0 * acos(-1.0) / size;
@@ -138,5 +144,15 @@ void GraphDraw::drawLines(QPointF *points, QPainter *p, int i, int j, qreal radi
             return;
         }
         p->drawEllipse(QPointF(circleX, circleY), radius/5, radius/5);
+    }
+}
+
+
+void StateGraphDraw::newEvent(bool direction)
+{
+    if (direction) {
+        graph.nextNode();
+    }else {
+        graph.lastNode();
     }
 }
